@@ -29,6 +29,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       clientId="JyuPU3Bo489j177lD0IbysztF27KYnuE"
       authorizationParams={{
         audience: 'https://videoteka.komandospavadinimas.lt',
+        scope: 'profile email admin',
         redirect_uri: window.location.origin
       }}
     >
