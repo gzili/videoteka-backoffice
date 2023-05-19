@@ -1,6 +1,6 @@
 import { AppBar, Box, Button, Tab, Typography, Toolbar, Tabs, Stack } from '@mui/material';
 import { VideoCall } from "@mui/icons-material";
-import { Link, Outlet, useMatch } from 'react-router-dom';
+import { Link, Navigate, Outlet, useMatch, useResolvedPath } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
 import { LoadingButton } from "@mui/lab";
 
@@ -52,8 +52,11 @@ function LinkTab(props) {
 }
 
 function MainLayout() {
-  let matchMovies = useMatch({ path: 'movies' });
-  let matchSeries = useMatch({ path: 'series' });
+  const match = useMatch({ path: '/', end: true });
+
+  if (match) {
+    return <Navigate to="/browse" />;
+  }
 
   return (
       <Box>
@@ -63,20 +66,30 @@ function MainLayout() {
               Videoteka Backoffice
             </Typography>
             <Stack direction="row" spacing={2}>
-              <Button startIcon={<VideoCall/>} color="inherit">Create</Button>
-              <LogoutButton/>
+              <Button component={Link} to="/create" startIcon={<VideoCall />} color="inherit">Create</Button>
+              <LogoutButton />
             </Stack>
           </Toolbar>
         </AppBar>
-        <Toolbar variant="dense"/>
+        <Toolbar variant="dense" />
         <Box p={2}>
-          <Tabs value={matchMovies ? 0 : matchSeries ? 1 : false}>
-            <LinkTab label="Movies" to="/movies"/>
-            <LinkTab label="Series" to="/series"/>
-          </Tabs>
-          <Outlet/>
+          <Outlet />
         </Box>
       </Box>
+  );
+}
+
+export function BrowseLayout() {
+  const resolvedMovies = useResolvedPath('movies');
+  const matchMovies = useMatch({ path: resolvedMovies.pathname });
+  const resolvedSeries = useResolvedPath('series');
+  const matchSeries = useMatch({ path: resolvedSeries.pathname });
+
+  return (
+      <Tabs value={matchMovies ? 0 : matchSeries ? 1 : false}>
+        <LinkTab label="Movies" to="/movies" />
+        <LinkTab label="Series" to="/series" />
+      </Tabs>
   );
 }
 
@@ -84,8 +97,8 @@ export function Layout() {
   const { isAuthenticated } = useAuth0();
 
   if (!isAuthenticated) {
-    return <LoginLayout/>
+    return <LoginLayout />
   }
 
-  return <MainLayout/>;
+  return <MainLayout />;
 }

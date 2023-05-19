@@ -2,8 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Auth0Provider } from '@auth0/auth0-react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Layout } from './Layout.jsx';
+import { BrowseLayout, Layout } from './Layout.jsx';
 import './main.css';
+import { ApiInit } from "./ApiInit.jsx";
+import { Create } from "./pages/Create.jsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const router = createBrowserRouter([
   {
@@ -11,12 +23,22 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: 'movies',
-        element: <div>Movies</div>,
+        path: 'create',
+        element: <Create />,
       },
       {
-        path: 'series',
-        element: <div>Series</div>,
+        path: 'browse',
+        element: <BrowseLayout />,
+        children: [
+          {
+            path: 'movies',
+            element: <div>Movies</div>,
+          },
+          {
+            path: 'series',
+            element: <div>Series</div>,
+          },
+        ],
       },
     ],
   },
@@ -33,7 +55,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         redirect_uri: window.location.origin
       }}
     >
-      <RouterProvider router={router} />
+      <ApiInit>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
+      </ApiInit>
     </Auth0Provider>
   </React.StrictMode>,
 );
