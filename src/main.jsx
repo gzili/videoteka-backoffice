@@ -8,6 +8,10 @@ import { ApiInit } from "./ApiInit.jsx";
 import { Create } from "./pages/Create.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { CssBaseline } from "@mui/material";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { moviesLoader } from "./loaders/moviesLoader.js";
+import { BrowseMovies } from "./pages/BrowseMovies.jsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -33,7 +37,8 @@ const router = createBrowserRouter([
         children: [
           {
             path: 'movies',
-            element: <div>Movies</div>,
+            loader: moviesLoader,
+            element: <BrowseMovies />,
           },
           {
             path: 'series',
@@ -48,20 +53,22 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <CssBaseline />
-    <Auth0Provider
-      domain="dev-r9sh2y9g.us.auth0.com"
-      clientId="JyuPU3Bo489j177lD0IbysztF27KYnuE"
-      authorizationParams={{
-        audience: 'https://videoteka.komandospavadinimas.lt',
-        scope: 'profile email admin',
-        redirect_uri: window.location.origin
-      }}
-    >
-      <ApiInit>
-        <QueryClientProvider client={queryClient}>
-          <RouterProvider router={router} />
-        </QueryClientProvider>
-      </ApiInit>
-    </Auth0Provider>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <Auth0Provider
+          domain="dev-r9sh2y9g.us.auth0.com"
+          clientId="JyuPU3Bo489j177lD0IbysztF27KYnuE"
+          authorizationParams={{
+            audience: 'https://videoteka.komandospavadinimas.lt',
+            scope: 'profile email admin',
+            redirect_uri: window.location.origin
+          }}
+      >
+        <ApiInit>
+          <QueryClientProvider client={queryClient}>
+            <RouterProvider router={router} />
+          </QueryClientProvider>
+        </ApiInit>
+      </Auth0Provider>
+    </LocalizationProvider>
   </React.StrictMode>,
 );

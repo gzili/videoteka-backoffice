@@ -36,6 +36,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@mui/lab", "virtual:ce6bfaa04b2d86f978b4bb30279d84cba6919dee7d684fc09184ea5bb45cc347448190e37b0346812e94d5b7a09384453ee254ca33a3e758dd1df99108ec2c71#npm:5.0.0-alpha.130"],\
             ["@mui/material", "virtual:ce6bfaa04b2d86f978b4bb30279d84cba6919dee7d684fc09184ea5bb45cc347448190e37b0346812e94d5b7a09384453ee254ca33a3e758dd1df99108ec2c71#npm:5.13.1"],\
             ["@mui/system", "virtual:ce6bfaa04b2d86f978b4bb30279d84cba6919dee7d684fc09184ea5bb45cc347448190e37b0346812e94d5b7a09384453ee254ca33a3e758dd1df99108ec2c71#npm:5.13.1"],\
+            ["@mui/x-data-grid", "virtual:ce6bfaa04b2d86f978b4bb30279d84cba6919dee7d684fc09184ea5bb45cc347448190e37b0346812e94d5b7a09384453ee254ca33a3e758dd1df99108ec2c71#npm:6.5.0"],\
             ["@mui/x-date-pickers", "virtual:ce6bfaa04b2d86f978b4bb30279d84cba6919dee7d684fc09184ea5bb45cc347448190e37b0346812e94d5b7a09384453ee254ca33a3e758dd1df99108ec2c71#npm:6.5.0"],\
             ["@tanstack/react-query", "virtual:ce6bfaa04b2d86f978b4bb30279d84cba6919dee7d684fc09184ea5bb45cc347448190e37b0346812e94d5b7a09384453ee254ca33a3e758dd1df99108ec2c71#npm:4.29.7"],\
             ["@types/react", "npm:18.2.6"],\
@@ -3532,6 +3533,45 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "packagePeers": [\
             "@types/react",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@mui/x-data-grid", [\
+        ["npm:6.5.0", {\
+          "packageLocation": "./.yarn/cache/@mui-x-data-grid-npm-6.5.0-8506de321c-01d01ce35a.zip/node_modules/@mui/x-data-grid/",\
+          "packageDependencies": [\
+            ["@mui/x-data-grid", "npm:6.5.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:ce6bfaa04b2d86f978b4bb30279d84cba6919dee7d684fc09184ea5bb45cc347448190e37b0346812e94d5b7a09384453ee254ca33a3e758dd1df99108ec2c71#npm:6.5.0", {\
+          "packageLocation": "./.yarn/__virtual__/@mui-x-data-grid-virtual-6f8fa32c92/0/cache/@mui-x-data-grid-npm-6.5.0-8506de321c-01d01ce35a.zip/node_modules/@mui/x-data-grid/",\
+          "packageDependencies": [\
+            ["@mui/x-data-grid", "virtual:ce6bfaa04b2d86f978b4bb30279d84cba6919dee7d684fc09184ea5bb45cc347448190e37b0346812e94d5b7a09384453ee254ca33a3e758dd1df99108ec2c71#npm:6.5.0"],\
+            ["@babel/runtime", "npm:7.21.5"],\
+            ["@mui/material", "virtual:ce6bfaa04b2d86f978b4bb30279d84cba6919dee7d684fc09184ea5bb45cc347448190e37b0346812e94d5b7a09384453ee254ca33a3e758dd1df99108ec2c71#npm:5.13.1"],\
+            ["@mui/system", "virtual:ce6bfaa04b2d86f978b4bb30279d84cba6919dee7d684fc09184ea5bb45cc347448190e37b0346812e94d5b7a09384453ee254ca33a3e758dd1df99108ec2c71#npm:5.13.1"],\
+            ["@mui/utils", "virtual:c81826dbd46914522aeedf4925cadb97215f0420023222e6e9dd4a988848e525f1f52a1fe1e88559bdbfd5cd38a2193645c5d729760821f8df2807f70fc69dea#npm:5.13.1"],\
+            ["@types/mui__material", null],\
+            ["@types/mui__system", null],\
+            ["@types/react", "npm:18.2.6"],\
+            ["@types/react-dom", "npm:18.2.4"],\
+            ["clsx", "npm:1.2.1"],\
+            ["prop-types", "npm:15.8.1"],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:ce6bfaa04b2d86f978b4bb30279d84cba6919dee7d684fc09184ea5bb45cc347448190e37b0346812e94d5b7a09384453ee254ca33a3e758dd1df99108ec2c71#npm:18.2.0"],\
+            ["reselect", "npm:4.1.8"]\
+          ],\
+          "packagePeers": [\
+            "@mui/material",\
+            "@mui/system",\
+            "@types/mui__material",\
+            "@types/mui__system",\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
             "react"\
           ],\
           "linkType": "HARD"\
@@ -7532,6 +7572,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["reselect", [\
+        ["npm:4.1.8", {\
+          "packageLocation": "./.yarn/cache/reselect-npm-4.1.8-cad5f0a3f3-a4ac87ceda.zip/node_modules/reselect/",\
+          "packageDependencies": [\
+            ["reselect", "npm:4.1.8"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["resolve", [\
         ["patch:resolve@npm%3A1.22.3#~builtin<compat/resolve>::version=1.22.3&hash=c3c19d", {\
           "packageLocation": "./.yarn/cache/resolve-patch-bb62d3c3c5-ad59734723.zip/node_modules/resolve/",\
@@ -8237,6 +8286,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@mui/lab", "virtual:ce6bfaa04b2d86f978b4bb30279d84cba6919dee7d684fc09184ea5bb45cc347448190e37b0346812e94d5b7a09384453ee254ca33a3e758dd1df99108ec2c71#npm:5.0.0-alpha.130"],\
             ["@mui/material", "virtual:ce6bfaa04b2d86f978b4bb30279d84cba6919dee7d684fc09184ea5bb45cc347448190e37b0346812e94d5b7a09384453ee254ca33a3e758dd1df99108ec2c71#npm:5.13.1"],\
             ["@mui/system", "virtual:ce6bfaa04b2d86f978b4bb30279d84cba6919dee7d684fc09184ea5bb45cc347448190e37b0346812e94d5b7a09384453ee254ca33a3e758dd1df99108ec2c71#npm:5.13.1"],\
+            ["@mui/x-data-grid", "virtual:ce6bfaa04b2d86f978b4bb30279d84cba6919dee7d684fc09184ea5bb45cc347448190e37b0346812e94d5b7a09384453ee254ca33a3e758dd1df99108ec2c71#npm:6.5.0"],\
             ["@mui/x-date-pickers", "virtual:ce6bfaa04b2d86f978b4bb30279d84cba6919dee7d684fc09184ea5bb45cc347448190e37b0346812e94d5b7a09384453ee254ca33a3e758dd1df99108ec2c71#npm:6.5.0"],\
             ["@tanstack/react-query", "virtual:ce6bfaa04b2d86f978b4bb30279d84cba6919dee7d684fc09184ea5bb45cc347448190e37b0346812e94d5b7a09384453ee254ca33a3e758dd1df99108ec2c71#npm:4.29.7"],\
             ["@types/react", "npm:18.2.6"],\

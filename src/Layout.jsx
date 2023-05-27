@@ -86,10 +86,17 @@ export function BrowseLayout() {
   const matchSeries = useMatch({ path: resolvedSeries.pathname });
 
   return (
-      <Tabs value={matchMovies ? 0 : matchSeries ? 1 : false}>
-        <LinkTab label="Movies" to="/movies" />
-        <LinkTab label="Series" to="/series" />
-      </Tabs>
+      <Box>
+        <Box>
+          <Tabs value={matchMovies ? 0 : matchSeries ? 1 : false}>
+            <LinkTab label="Movies" to="/browse/movies" />
+            <LinkTab label="Series" to="/browse/series" />
+          </Tabs>
+        </Box>
+        <Box py={2}>
+          <Outlet />
+        </Box>
+      </Box>
   );
 }
 
