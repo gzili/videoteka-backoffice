@@ -1,4 +1,5 @@
 import ky from "ky";
+import { BACKEND_URL } from "./config.js";
 
 let getAccessToken = () => Promise.resolve('');
 
@@ -25,7 +26,7 @@ function getAccessTokenWithWait() {
 }
 
 export const api = ky.create({
-  prefixUrl: 'http://localhost:8080/api',
+  prefixUrl: BACKEND_URL,
   retry: 0,
   hooks: {
     beforeRequest: [

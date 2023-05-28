@@ -18,6 +18,7 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { LoadingButton } from "@mui/lab";
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { BACKEND_URL } from "../config.js";
 
 function useUploadFile(props) {
   const { onProgressChange, onSuccess } = props;
@@ -55,7 +56,7 @@ function useUploadFile(props) {
 
   const uploadFile = useCallback(async file => {
     setLoading(true);
-    xhr.open('POST', 'http://localhost:8080/api/files');
+    xhr.open('POST', `${BACKEND_URL}/files`);
     const token = await getAccessTokenSilently();
     xhr.setRequestHeader('Authorization', `Bearer ${token}`);
     const fd = new FormData();
@@ -163,7 +164,7 @@ function ProtectedImage(props) {
     return null;
   }
 
-  return <Box sx={{ borderRadius: '5px' }} display="block" component="img" width="100%" src={`http://localhost:8080/api/files/${fileId}?access_token=${accessToken}`}/>;
+  return <Box sx={{ borderRadius: '5px' }} display="block" component="img" width="100%" src={`${BACKEND_URL}/files/${fileId}?access_token=${accessToken}`}/>;
 }
 
 function ProtectedVideo(props) {
@@ -186,7 +187,7 @@ function ProtectedVideo(props) {
           controls
           muted="muted"
       >
-        <source src={`http://localhost:8080/api/files/${fileId}?access_token=${token}`} />
+        <source src={`${BACKEND_URL}/files/${fileId}?access_token=${token}`} />
       </Box>
   );
 }
@@ -423,9 +424,13 @@ function ControlledField(props) {
   return render({ ...field, errorMessage: error?.message });
 }
 
+function genresToOptions(genres) {
+  return genres.map(g => ({ label: g.name, value: g.id }));
+}
+
 async function loadGenres(nameQuery) {
   const response = await api.get(`genres?name=${nameQuery}`).json();
-  return response.content.map(g => ({ label: g.name, value: g.id }));
+  return genresToOptions(response.content);
 }
 
 async function loadSeries(query) {
