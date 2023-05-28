@@ -25,7 +25,7 @@ yarn dev
 
 The backoffice frontend should now be served at `http://localhost:5173`.
 
-**Note:** by default, backoffice expects backend to be accessible at `http://localhost:8080/api`. You can use `VITE_BACKEND_HOST`, `VITE_BACKEND_PORT` and `VITE_BACKEND_PATH` environment variables to change this. Either change the values in `.env` or create `.env.local` file (ignored by Git) and put your overrides there.
+**Note:** by default, backoffice expects backend to be accessible at `http://localhost:8080/api`. The port can be changed using the `VITE_BACKEND_PORT` environment variable. Either edit the existing `.env` file or create `.env.local` file (ignored by Git) and put your overrides there to avoid merge conflicts in the future.
 
 ### Running as a Docker container
 
