@@ -23,7 +23,7 @@ To start the development server, run:
 yarn dev
 ```
 
-The backoffice frontend should now be served at `http://localhost:5173` (if using the default settings).
+The backoffice frontend should now be served at `http://localhost:5173`.
 
 **Note:** by default, backoffice expects backend to be accessible at `http://localhost:8080/api`. You can use `VITE_BACKEND_HOST`, `VITE_BACKEND_PORT` and `VITE_BACKEND_PATH` environment variables to change this. Either change the values in `.env` or create `.env.local` file (ignored by Git) and put your overrides there.
 
