@@ -27,9 +27,15 @@ The backoffice frontend should now be served at `http://localhost:5173`.
 
 **Note:** by default, backoffice expects backend to be accessible at `http://localhost:8080/api`. The port can be changed using the `VITE_BACKEND_PORT` environment variable. Either edit the existing `.env` file or create `.env.local` file (ignored by Git) and put your overrides there to avoid merge conflicts in the future.
 
-### Running as a Docker container
+### Run using Docker Compose (local image)
 
-Docker image is coming soon...
+Make sure the correct backend port (`VITE_BACKEND_PORT`) is set in `.env` (you can also override this by creating a separate `.env.local` file).
+
+In the root of the repository, run:
+
+```
+docker compose up -d
+```
 
 ### Test account
 
