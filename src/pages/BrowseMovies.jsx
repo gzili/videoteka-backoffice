@@ -1,4 +1,4 @@
-import { useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid';
 import { Box, Chip, IconButton, Stack } from "@mui/material";
 import { Delete, Edit, Videocam } from '@mui/icons-material';
@@ -96,7 +96,7 @@ const columns = [
           <IconButton aria-label="watch">
             <Videocam />
           </IconButton>
-          <IconButton aria-label="edit">
+          <IconButton component={Link} to={`/movies/${id}`} aria-label="edit">
             <Edit />
           </IconButton>
           <IconButton aria-label="delete">

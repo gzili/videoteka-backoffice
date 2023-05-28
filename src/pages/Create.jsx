@@ -19,6 +19,7 @@ import { LoadingButton } from "@mui/lab";
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { BACKEND_URL } from "../config.js";
+import * as dayjs from 'dayjs';
 
 function useUploadFile(props) {
   const { onProgressChange, onSuccess } = props;
@@ -467,39 +468,64 @@ function toCreateEpisodeDto(formValues) {
   });
 }
 
-function createMovieOrEpisode(formValues) {
+function createMovieOrEpisode({ resourceId, formValues }) {
+  const method = resourceId ? 'patch' : 'post';
+  let dto;
+  let url;
+
   if (formValues.contentType === 'movie') {
-    const dto = toCreateMovieDto(formValues);
-    return api.post('movies', { json: dto }).json();
+    url = resourceId ? `movies/${resourceId}` : 'movies';
+    dto = toCreateMovieDto(formValues);
   }
 
   if (formValues.contentType === 'episode') {
-    const dto = toCreateEpisodeDto(formValues);
     const seasonId = formValues.seasonOption.value;
-    return api.post(`seasons/${seasonId}/episodes`, { json: dto }).json();
+    url = resourceId ? `episodes/${resourceId}` : `seasons/${seasonId}/episodes`;
+    dto = toCreateEpisodeDto(formValues);
   }
 
-  throw new Error('unsupported content type');
+  return api[method](url, { json: dto }).json();
 }
 
-export function Create() {
-  const { watch, setValue, control, handleSubmit } = useForm({
-    defaultValues: {
+export function Create(props) {
+  const { movie, episode } = props;
+
+  let defaultValues = {
+    video: {
       fileId: '',
+      thumbnailFileId: '',
+    },
+    title: '',
+    genreOptions: [],
+    description: '',
+    releaseDate: null,
+    contentType: 'movie',
+    episode: {
+      seriesOption: null,
+      seasonOption: null,
+    },
+  }
+
+  if (movie) {
+    defaultValues = {
       video: {
-        fileId: '',
-        thumbnailFileId: '',
+        fileId: movie.video.contentId,
+        thumbnailFileId: movie.video.thumbnailId,
       },
-      title: '',
-      genreOptions: [],
-      description: '',
-      releaseDate: null,
+      title: movie.title,
+      genreOptions: genresToOptions(movie.genres),
+      description: movie.description,
+      releaseDate: dayjs(movie.releaseDate),
       contentType: 'movie',
       episode: {
         seriesOption: null,
         seasonOption: null,
       },
-    },
+    }
+  }
+
+  const { watch, setValue, control, handleSubmit } = useForm({
+    defaultValues,
   });
 
   const contentType = watch('contentType');
@@ -520,7 +546,7 @@ export function Create() {
 
   const navigate = useNavigate();
 
-  const { mutate } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: createMovieOrEpisode,
     onSuccess: () => {
       switch (contentType) {
@@ -535,8 +561,9 @@ export function Create() {
   })
 
   const handleValidSubmit = useCallback(formValues => {
-    mutate(formValues);
-  }, [mutate]);
+    const resourceId = movie?.id ?? episode?.id;
+    mutate({ resourceId, formValues });
+  }, [mutate, movie, episode]);
 
   return (
       <Box
@@ -546,7 +573,7 @@ export function Create() {
           }}
       >
         <Typography fontSize="2.5em" fontWeight="bold" mb={2}>
-          Upload Video
+          {movie ? 'Edit Movie' : episode ? 'Edit Episode' : 'Upload Video'}
         </Typography>
         <Box
           sx={{
@@ -556,42 +583,44 @@ export function Create() {
           }}
         >
           <Stack spacing={6}>
-            <Stack spacing={2}>
-              <ControlledField
-                  control={control}
-                  name="contentType"
-                  render={({ errorMessage, ...rest }) => (
-                      <TextField
-                          {...rest}
-                          label="Video type"
-                          error={!!errorMessage}
-                          helperText={errorMessage}
-                          select
-                      >
-                        <MenuItem value="movie">Movie</MenuItem>
-                        <MenuItem value="episode">Episode</MenuItem>
-                      </TextField>
+            {!(movie || episode) && (
+                <Stack spacing={2}>
+                  <ControlledField
+                      control={control}
+                      name="contentType"
+                      render={({ errorMessage, ...rest }) => (
+                          <TextField
+                              {...rest}
+                              label="Video type"
+                              error={!!errorMessage}
+                              helperText={errorMessage}
+                              select
+                          >
+                            <MenuItem value="movie">Movie</MenuItem>
+                            <MenuItem value="episode">Episode</MenuItem>
+                          </TextField>
+                      )}
+                  />
+                  {contentType === 'episode' && (
+                      <ControlledField
+                          control={control}
+                          name="episode.seriesOption"
+                          render={props => (
+                              <AsyncAutocomplete {...props} label="Series" loadOptions={loadSeries} />
+                          )}
+                      />
                   )}
-              />
-              {contentType === 'episode' && (
-                  <ControlledField
-                      control={control}
-                      name="episode.seriesOption"
-                      render={props => (
-                          <AsyncAutocomplete {...props} label="Series" loadOptions={loadSeries} />
-                      )}
-                  />
-              )}
-              {seriesOption && (
-                  <ControlledField
-                      control={control}
-                      name="episode.seasonOption"
-                      render={props => (
-                          <Combobox {...props} label="Season" options={seasonOptions} />
-                      )}
-                  />
-              )}
-            </Stack>
+                  {seriesOption && (
+                      <ControlledField
+                          control={control}
+                          name="episode.seasonOption"
+                          render={props => (
+                              <Combobox {...props} label="Season" options={seasonOptions} />
+                          )}
+                      />
+                  )}
+                </Stack>
+            )}
             <Stack spacing={2}>
               <ControlledField
                   control={control}
@@ -671,7 +700,9 @@ export function Create() {
           </Stack>
         </Box>
         <Box display="flex" justifyContent="flex-end" mt={2}>
-          <LoadingButton variant="contained" onClick={handleSubmit(handleValidSubmit)}>Create</LoadingButton>
+          <LoadingButton variant="contained" loading={isLoading} onClick={handleSubmit(handleValidSubmit)}>
+            {(movie || episode) ? 'Update' : 'Create'}
+          </LoadingButton>
         </Box>
       </Box>
   );
