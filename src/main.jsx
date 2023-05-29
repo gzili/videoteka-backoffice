@@ -10,11 +10,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { CssBaseline } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { movieLoader, moviesLoader, seriesLoader } from "./loaders";
+import { loadSeriesById, movieLoader, moviesLoader, seriesLoader } from "./loaders";
 import { BrowseMovies } from "./pages/BrowseMovies.jsx";
 import { EditMovie } from "./pages/EditMovie.jsx";
 import { NewSeries } from "./pages/NewSeries.jsx";
 import { BrowseSeries } from "./pages/BrowseSeries.jsx";
+import { ViewSeries } from "./pages/ViewSeries.jsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -58,7 +59,12 @@ const router = createBrowserRouter([
       {
         path: 'series/new',
         element: <NewSeries />,
-      }
+      },
+      {
+        path: 'series/:id',
+        loader: loadSeriesById,
+        element: <ViewSeries />,
+      },
     ],
   },
 ]);
