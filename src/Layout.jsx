@@ -79,21 +79,35 @@ function MainLayout() {
   );
 }
 
+function useIsResolvedMatch(to) {
+  const resolvedPath = useResolvedPath(to);
+  const match = useMatch({ path: resolvedPath.pathname });
+  return match !== null;
+}
+
 export function BrowseLayout() {
-  const resolvedMovies = useResolvedPath('movies');
-  const matchMovies = useMatch({ path: resolvedMovies.pathname });
-  const resolvedSeries = useResolvedPath('series');
-  const matchSeries = useMatch({ path: resolvedSeries.pathname });
+  const isMovies = useIsResolvedMatch('movies');
+  const isSeries = useIsResolvedMatch('series');
 
   return (
       <Box>
-        <Box>
-          <Tabs value={matchMovies ? 0 : matchSeries ? 1 : false}>
+        <Typography fontSize="2em" fontWeight="bold" mb={1}>
+          Available Content
+        </Typography>
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Tabs value={isMovies ? 0 : isSeries ? 1 : false}>
             <LinkTab label="Movies" to="/browse/movies" />
             <LinkTab label="Series" to="/browse/series" />
           </Tabs>
+          <Box>
+            {isMovies ? (
+                <Button component={Link} to="/create" variant="contained">New Movie</Button>
+            ) : isSeries ? (
+                <Button component={Link} to="/series/new" variant="contained">New Series</Button>
+            ): null}
+          </Box>
         </Box>
-        <Box py={2}>
+        <Box py={4}>
           <Outlet />
         </Box>
       </Box>

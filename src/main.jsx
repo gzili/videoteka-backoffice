@@ -13,6 +13,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { movieLoader, moviesLoader } from "./loaders/movieLoaders.js";
 import { BrowseMovies } from "./pages/BrowseMovies.jsx";
 import { EditMovie } from "./pages/EditMovie.jsx";
+import { NewSeries } from "./pages/NewSeries.jsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
         loader: movieLoader,
         element: <EditMovie />,
       },
+      {
+        path: 'series/new',
+        element: <NewSeries />,
+      }
     ],
   },
 ]);
