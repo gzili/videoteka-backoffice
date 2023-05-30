@@ -63,8 +63,7 @@ function createMovieOrEpisode({ resourceId, formValues }) {
   }
 
   if (formValues.contentType === 'episode') {
-    const seasonId = formValues.seasonOption.value;
-    url = resourceId ? `episodes/${resourceId}` : `seasons/${seasonId}/episodes`;
+    url = resourceId ? `episodes/${resourceId}` : `seasons/${formValues.episode.seasonOption.value}/episodes`;
     dto = toCreateEpisodeDto(formValues);
   }
 
@@ -108,6 +107,24 @@ export function Create(props) {
     }
   }
 
+  if (episode) {
+    defaultValues = {
+      video: {
+        fileId: episode.video.contentId,
+        thumbnailFileId: episode.video.thumbnailId,
+      },
+      title: episode.title,
+      genreOptions: [],
+      description: episode.description,
+      releaseDate: dayjs(episode.releaseDate),
+      contentType: 'episode',
+      episode: {
+        seriesOption: null,
+        seasonOption: null,
+      },
+    }
+  }
+
   const { watch, setValue, control, handleSubmit } = useForm({
     defaultValues,
   });
@@ -138,7 +155,7 @@ export function Create(props) {
           navigate('/browse/movies');
           break;
         case 'episode':
-          navigate('/browse/episodes');
+          navigate('/browse/series');
           break;
       }
     },
