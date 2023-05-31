@@ -1,5 +1,5 @@
-import { AppBar, Box, Button, Tab, Typography, Toolbar, Tabs, Stack, TextField } from '@mui/material';
-import { VideoCall } from "@mui/icons-material";
+import { AppBar, Box, Button, Tab, Typography, Toolbar, Tabs, Stack, TextField, InputAdornment } from '@mui/material';
+import { Search, VideoCall } from "@mui/icons-material";
 import { Link, Navigate, Outlet, useMatch, useSearchParams, useResolvedPath } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
 import { LoadingButton } from "@mui/lab";
@@ -33,7 +33,10 @@ function LogoutButton() {
   const { logout } = useAuth0();
 
   return (
-      <Button color="inherit" onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+      <Button
+          color="inherit"
+          onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}
+      >
         Logout
       </Button>
   );
@@ -95,6 +98,7 @@ export function BrowseLayout() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const value = searchParams.get('q') ?? '';
+
   const handleChange = useCallback(e => {
     const q = e.target.value;
     setSearchParams(params => {
@@ -123,14 +127,26 @@ export function BrowseLayout() {
                 display: 'flex',
               }}
           >
-            <Box mr={2}>
-              <TextField placeholder="Search" variant="standard" value={value} onChange={handleChange} />
-            </Box>
             {isMovies ? (
                 <Button component={Link} to="/create" variant="contained">New Movie</Button>
             ) : isSeries ? (
                 <Button component={Link} to="/series/new" variant="contained">New Series</Button>
             ): null}
+            <Box ml={2}>
+              <TextField
+                  placeholder="Search"
+                  variant="standard"
+                  value={value}
+                  onChange={handleChange}
+                  InputProps={{
+                    startAdornment: (
+                        <InputAdornment position="start">
+                          <Search />
+                        </InputAdornment>
+                    )
+                  }}
+              />
+            </Box>
           </Box>
         </Box>
         <Box py={4}>

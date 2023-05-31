@@ -1,9 +1,7 @@
-import { Link, useLoaderData } from 'react-router-dom';
-import { DataGrid } from '@mui/x-data-grid';
+import { Link } from 'react-router-dom';
 import { Box, Chip, IconButton, Stack } from "@mui/material";
 import { Delete, Edit, Videocam } from '@mui/icons-material';
-import { useCallback } from 'react';
-import { ProtectedImage } from "../components";
+import { BrowseDataGrid, ProtectedImage } from "../components";
 
 const columns = [
   {
@@ -63,18 +61,5 @@ const columns = [
 ];
 
 export function BrowseSeries() {
-  const data = useLoaderData();
-
-  const getRowHeight = useCallback(() => 'auto', []);
-
-  return (
-      <DataGrid
-          columns={columns}
-          rows={data.content}
-          disableColumnMenu
-          disableRowSelectionOnClick
-          getRowHeight={getRowHeight}
-          pageSizeOptions={[10]}
-      />
-  );
+  return <BrowseDataGrid columns={columns} />;
 }

@@ -1,8 +1,7 @@
 import { api } from "../api.js";
+import { makeBrowseLoader } from "./shared.js";
 
-export function seriesLoader() {
-  return api.get('series').json();
-}
+export const seriesLoader = makeBrowseLoader('series');
 
 export function loadSeriesById({ params }) {
   return api.get(`series/${params.id}`).json();

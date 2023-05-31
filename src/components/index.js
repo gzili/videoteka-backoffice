@@ -1,4 +1,5 @@
 export * from './AsyncAutocomplete.jsx';
+export * from './Browse.jsx';
 export * from './Combobox.jsx';
 export * from './ControlledField.jsx';
 export * from './FileUploadInput.jsx';
