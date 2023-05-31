@@ -89,6 +89,7 @@ function EpisodesList(props) {
           disableColumnMenu
           disableRowSelectionOnClick
           getRowHeight={getRowHeight}
+          pageSizeOptions={[100]}
       />
   );
 }
