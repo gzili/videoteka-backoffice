@@ -2,6 +2,7 @@ import { Link, useLoaderData } from 'react-router-dom';
 import { Box, Chip, IconButton, Stack } from "@mui/material";
 import { Delete, Edit, Videocam } from '@mui/icons-material';
 import { BrowseDataGrid, ProtectedImage } from "../components";
+import { FRONTEND_URL } from "../config.js";
 
 const columns = [
   {
@@ -50,7 +51,7 @@ const columns = [
     align: 'right',
     renderCell: ({ value: id }) => (
         <Stack direction="row" spacing={1}>
-          <IconButton aria-label="watch">
+          <IconButton component="a" href={`${FRONTEND_URL}/movie/${id}`} target="_blank" aria-label="watch">
             <Videocam />
           </IconButton>
           <IconButton component={Link} to={`/movies/${id}`} aria-label="edit">

@@ -20,6 +20,7 @@ import { useMutation } from "@tanstack/react-query";
 import { LoadingButton } from "@mui/lab";
 import { Delete, Edit, ExpandMore, Videocam } from '@mui/icons-material';
 import { DataGrid } from "@mui/x-data-grid";
+import { FRONTEND_URL } from "../config.js";
 
 const episodeColumns = [
   {
@@ -62,7 +63,7 @@ const episodeColumns = [
     align: 'right',
     renderCell: ({ value: id }) => (
         <Stack direction="row" spacing={1}>
-          <IconButton aria-label="watch">
+          <IconButton component="a" href={`${FRONTEND_URL}/episode/${id}`} target="_blank" aria-label="watch">
             <Videocam />
           </IconButton>
           <IconButton component={Link} to={`/episodes/${id}/edit`} aria-label="edit">
