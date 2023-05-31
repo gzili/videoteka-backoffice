@@ -12,39 +12,14 @@ import {
   TextField,
   Typography
 } from "@mui/material";
-import { useAccessToken } from "../hooks";
 import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
-import { ControlledField } from "../components/index.js";
+import { ControlledField, ProtectedImage } from "../components";
 import { api } from "../api.js";
 import { useMutation } from "@tanstack/react-query";
 import { LoadingButton } from "@mui/lab";
 import { Delete, Edit, ExpandMore, Videocam } from '@mui/icons-material';
 import { DataGrid } from "@mui/x-data-grid";
-import { BACKEND_URL } from "../config.js";
-
-function ProtectedImage(props) {
-  const { fileId, sx } = props;
-
-  const accessToken = useAccessToken();
-
-  if (!accessToken) {
-    return null;
-  }
-
-  return (
-      <Box
-          component="img"
-          src={`${BACKEND_URL}/files/${fileId}?access_token=${accessToken}`}
-          sx={{
-            display: 'block',
-            height: 400,
-            borderRadius: '4px',
-            ...sx,
-          }}
-      />
-  );
-}
 
 const episodeColumns = [
   {
@@ -244,7 +219,7 @@ export function ViewSeries() {
   return (
       <Box maxWidth="1200px" m="0 auto">
         <Box display="grid" gridTemplateColumns="min-content 1fr">
-          <ProtectedImage fileId={series.thumbnailId} />
+          <ProtectedImage sx={{ height: 400 }} fileId={series.thumbnailId} />
           <Stack
               sx={{
                 px: 4,

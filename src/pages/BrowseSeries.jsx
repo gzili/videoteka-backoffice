@@ -2,48 +2,8 @@ import { Link, useLoaderData } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid';
 import { Box, Chip, IconButton, Stack } from "@mui/material";
 import { Delete, Edit, Videocam } from '@mui/icons-material';
-import { useCallback, useEffect, useState } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
-import { BACKEND_URL } from "../config.js";
-
-function useAccessToken() {
-  const [accessToken, setAccessToken] = useState('');
-
-  const { getAccessTokenSilently } = useAuth0();
-
-  useEffect(() => {
-    if (!accessToken) {
-      getAccessTokenSilently()
-          .then(token => {
-            setAccessToken(token);
-          });
-    }
-  }, [accessToken, getAccessTokenSilently]);
-
-  return accessToken;
-}
-
-function ProtectedImage(props) {
-  const { fileId } = props;
-
-  const accessToken = useAccessToken();
-
-  if (!accessToken) {
-    return null;
-  }
-
-  return (
-      <Box
-          component="img"
-          src={`${BACKEND_URL}/files/${fileId}?access_token=${accessToken}`}
-          sx={{
-            display: 'block',
-            height: 68,
-            borderRadius: '4px',
-          }}
-      />
-  );
-}
+import { useCallback } from 'react';
+import { ProtectedImage } from "../components";
 
 const columns = [
   {
@@ -52,7 +12,7 @@ const columns = [
     flex: 1,
     renderCell: ({ row }) => (
         <Box display="flex" py={1}>
-          <ProtectedImage fileId={row.thumbnailId} />
+          <ProtectedImage sx={{ height: 68 }} fileId={row.thumbnailId} />
           <Box ml={1} display="flex" alignItems="center">
             {row.title}
           </Box>

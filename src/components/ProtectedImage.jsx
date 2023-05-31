@@ -3,7 +3,7 @@ import { useAccessToken } from "../hooks";
 import { Box } from "@mui/material";
 
 export function ProtectedImage(props) {
-  const { fileId } = props;
+  const { fileId, sx } = props;
 
   const accessToken = useAccessToken();
 
@@ -11,5 +11,15 @@ export function ProtectedImage(props) {
     return null;
   }
 
-  return <Box sx={{ borderRadius: '5px' }} display="block" component="img" width="100%" src={`${BACKEND_URL}/files/${fileId}?access_token=${accessToken}`}/>;
+  return (
+      <Box
+          component="img"
+          src={`${BACKEND_URL}/files/${fileId}?access_token=${accessToken}`}
+          sx={{
+            display: 'block',
+            borderRadius: '4px',
+            ...sx,
+          }}
+      />
+  );
 }

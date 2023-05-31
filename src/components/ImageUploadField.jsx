@@ -10,7 +10,7 @@ export const ImageUploadField = forwardRef((props, ref) => {
   return (
       <ObjectField label="Thumbnail">
         {value ? (
-            <ProtectedImage fileId={value} />
+            <ProtectedImage sx={{ width: '100%' }} fileId={value} />
         ) : (
             <Box
                 sx={{
