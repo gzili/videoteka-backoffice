@@ -72,7 +72,7 @@ function MainLayout() {
               Videoteka Backoffice
             </Typography>
             <Stack direction="row" spacing={2}>
-              <Button component={Link} to="/create" startIcon={<VideoCall />} color="inherit">Create</Button>
+              <Button component={Link} to="/create" startIcon={<VideoCall />} color="inherit">Upload</Button>
               <LogoutButton />
             </Stack>
           </Toolbar>
