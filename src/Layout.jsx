@@ -33,7 +33,9 @@ function LogoutButton() {
   const { logout } = useAuth0();
 
   return (
-      <Button color="inherit" onClick={() => logout()}>Logout</Button>
+      <Button color="inherit" onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+        Logout
+      </Button>
   );
 }
 
