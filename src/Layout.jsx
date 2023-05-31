@@ -120,7 +120,7 @@ export function BrowseLayout() {
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Tabs value={isMovies ? 0 : isSeries ? 1 : false}>
             <LinkTab label="Movies" to="/browse/movies" />
-            <LinkTab label="Series" to="/browse/series" />
+            <LinkTab label="Series" to="/browse/series?size=100" />
           </Tabs>
           <Box
               sx={{
