@@ -1,4 +1,4 @@
-import { AppBar, Box, Button, Tab, Typography, Toolbar, Tabs, Stack, TextField, InputAdornment } from '@mui/material';
+import { AppBar, Box, Button, Link as MuiLink, Tab, Typography, Toolbar, Tabs, Stack, TextField, InputAdornment } from '@mui/material';
 import { Search, VideoCall } from "@mui/icons-material";
 import { Link, Navigate, Outlet, useMatch, useSearchParams, useResolvedPath } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
@@ -69,7 +69,7 @@ function MainLayout() {
         <AppBar>
           <Toolbar variant="dense">
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Videoteka Backoffice
+              <MuiLink component={Link} to="/" color="#fff" underline="none">Videoteka Backoffice</MuiLink>
             </Typography>
             <Stack direction="row" spacing={2}>
               <Button component={Link} to="/create" startIcon={<VideoCall />} color="inherit">Upload</Button>
