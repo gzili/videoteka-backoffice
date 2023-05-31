@@ -44,8 +44,8 @@ export function NewSeries() {
 
   const { mutate, isLoading } = useMutation({
     mutationFn: createSeries,
-    onSuccess: () => {
-      navigate('/browse/series');
+    onSuccess: series => {
+      navigate(`/series/${series.id}`);
     },
   });
 
