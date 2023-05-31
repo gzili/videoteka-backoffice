@@ -4,6 +4,7 @@ import { Box, Chip, IconButton, Stack } from "@mui/material";
 import { Delete, Edit, Videocam } from '@mui/icons-material';
 import { useCallback, useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
+import { BACKEND_URL } from "../config.js";
 
 function useAccessToken() {
   const [accessToken, setAccessToken] = useState('');
@@ -34,7 +35,7 @@ function ProtectedImage(props) {
   return (
       <Box
           component="img"
-          src={`http://localhost:8080/api/files/${fileId}?access_token=${accessToken}`}
+          src={`${BACKEND_URL}/files/${fileId}?access_token=${accessToken}`}
           sx={{
             display: 'block',
             height: 68,

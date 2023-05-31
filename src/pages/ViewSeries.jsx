@@ -21,6 +21,7 @@ import { useMutation } from "@tanstack/react-query";
 import { LoadingButton } from "@mui/lab";
 import { Delete, Edit, ExpandMore, Videocam } from '@mui/icons-material';
 import { DataGrid } from "@mui/x-data-grid";
+import { BACKEND_URL } from "../config.js";
 
 function ProtectedImage(props) {
   const { fileId, sx } = props;
@@ -34,7 +35,7 @@ function ProtectedImage(props) {
   return (
       <Box
           component="img"
-          src={`http://localhost:8080/api/files/${fileId}?access_token=${accessToken}`}
+          src={`${BACKEND_URL}/files/${fileId}?access_token=${accessToken}`}
           sx={{
             display: 'block',
             height: 400,

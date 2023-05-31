@@ -1,8 +1,9 @@
-import { AppBar, Box, Button, Tab, Typography, Toolbar, Tabs, Stack } from '@mui/material';
+import { AppBar, Box, Button, Tab, Typography, Toolbar, Tabs, Stack, TextField } from '@mui/material';
 import { VideoCall } from "@mui/icons-material";
-import { Link, Navigate, Outlet, useMatch, useResolvedPath } from 'react-router-dom';
+import { Link, Navigate, Outlet, useMatch, useSearchParams, useResolvedPath } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
 import { LoadingButton } from "@mui/lab";
+import { useCallback } from "react";
 
 function LoginLayout() {
   const { isLoading, loginWithRedirect } = useAuth0();
@@ -89,6 +90,22 @@ export function BrowseLayout() {
   const isMovies = useIsResolvedMatch('movies');
   const isSeries = useIsResolvedMatch('series');
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const value = searchParams.get('q') ?? '';
+  const handleChange = useCallback(e => {
+    const q = e.target.value;
+    setSearchParams(params => {
+      params.delete('page');
+      if (q) {
+        params.set('q', q);
+      } else {
+        params.delete('q');
+      }
+      return params;
+    });
+  }, [setSearchParams]);
+
   return (
       <Box>
         <Typography fontSize="2em" fontWeight="bold" mb={1}>
@@ -99,7 +116,14 @@ export function BrowseLayout() {
             <LinkTab label="Movies" to="/browse/movies" />
             <LinkTab label="Series" to="/browse/series" />
           </Tabs>
-          <Box>
+          <Box
+              sx={{
+                display: 'flex',
+              }}
+          >
+            <Box mr={2}>
+              <TextField placeholder="Search" variant="standard" value={value} onChange={handleChange} />
+            </Box>
             {isMovies ? (
                 <Button component={Link} to="/create" variant="contained">New Movie</Button>
             ) : isSeries ? (

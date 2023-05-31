@@ -1,9 +1,10 @@
-import { Link, useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData, useNavigation, useSearchParams } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid';
 import { Box, Chip, IconButton, Stack } from "@mui/material";
 import { Delete, Edit, Videocam } from '@mui/icons-material';
 import { useCallback, useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
+import { BACKEND_URL } from "../config.js";
 
 function useAccessToken() {
   const [accessToken, setAccessToken] = useState('');
@@ -34,7 +35,7 @@ function ProtectedImage(props) {
   return (
       <Box
           component="img"
-          src={`http://localhost:8080/api/files/${fileId}?access_token=${accessToken}`}
+          src={`${BACKEND_URL}/files/${fileId}?access_token=${accessToken}`}
           sx={{
             display: 'block',
             width: '100%',
@@ -110,16 +111,36 @@ const columns = [
 export function BrowseMovies() {
   const pageableMovies = useLoaderData();
 
+  const navigation = useNavigation();
+
   const getRowHeight = useCallback(() => 'auto', []);
+
+  const paginationModel = {
+    page: pageableMovies.pageable.pageNumber,
+    pageSize: pageableMovies.pageable.pageSize,
+  };
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const handlePaginationModelChange = useCallback(paginationModel => {
+    const pageNumber = paginationModel.page;
+    searchParams.set('page', `${pageNumber}`);
+    setSearchParams(searchParams);
+  }, [searchParams, setSearchParams]);
 
   return (
       <DataGrid
           columns={columns}
           rows={pageableMovies.content}
+          rowCount={pageableMovies.totalElements}
           disableColumnMenu
           disableRowSelectionOnClick
           getRowHeight={getRowHeight}
-          pageSizeOptions={[10]}
+          pageSizeOptions={[pageableMovies.pageable.pageSize]}
+          paginationModel={paginationModel}
+          paginationMode="server"
+          onPaginationModelChange={handlePaginationModelChange}
+          loading={navigation.state === 'loading'}
       />
   );
 }
